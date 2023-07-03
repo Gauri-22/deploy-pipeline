@@ -13,7 +13,7 @@ on:
       shaId:
         description: 'Commit id to Deploy'     
         required: true
-        default: 'main'
+        default: 'lambda'
       deployEnvironment:
         description: 'Environment to Deploy'     
         required: true
@@ -67,7 +67,6 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
       run: |
-        ls -la
         if [ "${{ env.DEPLOY_ENV }}" = "dev" ]; then IMAGE_TAG="latest"; else IMAGE_TAG="hotfix"; fi
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
