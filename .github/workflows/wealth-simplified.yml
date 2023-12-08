@@ -1,4 +1,4 @@
-name: Deploy Calibration UI
+name: Deploy Wealth Simplified
 
 on:
   workflow_dispatch:
