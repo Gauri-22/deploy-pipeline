@@ -68,8 +68,13 @@ jobs:
         npm install
         npm run build
 
-    - name: Upload to S3 and Invalidate Cache
+    - name: Upload to Prod S3
+      if: ${{ env.DEPLOY_ENV == 'prod'}}
+      run: |
+        aws s3 sync build/ s3://ca-task-management/ --delete
+
+    - name: Upload to Dev S3
+      if: ${{ env.DEPLOY_ENV == 'dev'}}
       run: |
         aws s3 sync build/ s3://ca-task-management-react-ui/ --delete
-        aws cloudfront create-invalidation --distribution-id E2IJUS76GIHA11 --paths "/*"
       
