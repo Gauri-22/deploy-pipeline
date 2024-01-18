@@ -1,4 +1,4 @@
-name: Deploy Wealth Simplified
+name: Deploy CFSL Pune
 
 on:
   workflow_dispatch:
