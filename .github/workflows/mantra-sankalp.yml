@@ -27,6 +27,7 @@ env:
   AWS_REGION: ap-south-1
   SHA_ID: ${{ github.event.inputs.shaId }}
   DEPLOY_ENV: ${{ github.event.inputs.deployEnvironment }}
+  DISTRIBUTION_ID: E1GA49HNHY2HTC
 
 jobs:
   build:
@@ -55,6 +56,10 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.AWS_REGION }}
+
+    - name: Invalidate CloudFront Cache
+      run: |
+          aws cloudfront create-invalidation --distribution-id ${{ env.DISTRIBUTION_ID }} --paths "/*"
 
     - name: Upload to Dev S3
       if: ${{ env.DEPLOY_ENV == 'dev'}}
